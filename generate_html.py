@@ -1,7 +1,7 @@
 import requests
 
 def update_html(repo_user, repo_name, folder, html_file):
-    url = f"https://api.github.com/repos/{repo_user}/{repo_name}/contents/{folder}"
+    url = f"https://api.github.com/repos/justusvervaart/slideshow/contents/fotos"
     
     r = requests.get(url)
     
