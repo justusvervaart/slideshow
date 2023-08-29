@@ -3,7 +3,11 @@
 <head>
     <title>Foto Slideshow</title>
     <style>
-        /* Voeg hier je CSS toe */
+        /* Je CSS hier */
+        #slideshow img {
+            width: 300px;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -13,11 +17,27 @@
 </div>
 
 <script>
-    // Voeg hier je JavaScript toe
     fetch('https://api.github.com/repos/justusvervaart/slideshow/contents')
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Netwerkproblemen bij het ophalen van de data.');
+        }
+        return response.json();
+    })
     .then(data => {
-        // Verwerk de foto's en voeg ze toe aan de slideshow
+        console.log(data); // Verifieer de opgehaalde data
+        const imgContainer = document.getElementById('slideshow');
+
+        data.forEach(file => {
+            if (file.type === 'file' && (file.name.endsWith('.jpg') || file.name.endsWith('.png'))) {
+                const img = document.createElement('img');
+                img.src = file.download_url;
+                imgContainer.appendChild(img);
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Er is een fout opgetreden:', error);
     });
 </script>
 
