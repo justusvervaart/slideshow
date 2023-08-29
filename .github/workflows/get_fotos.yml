@@ -1,4 +1,4 @@
-name: Run Python Script to Download Fotos from Email
+name: Download Fotos from Email
 
 on:
   push:
