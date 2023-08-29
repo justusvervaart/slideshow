@@ -17,6 +17,7 @@ def generate_html():
 <html>
 <head>
     <title>Foto Slideshow</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
         /* Zorg ervoor dat de afbeelding altijd op het scherm past */
         body {
@@ -32,7 +33,7 @@ def generate_html():
             display: block;
         }
     </style>
-    <meta http-equiv="refresh" content="3600">
+    <meta http-equiv="refresh" content="30">
 </head>
 <body>
 
