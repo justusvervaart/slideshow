@@ -1,68 +1,59 @@
 import os
+import glob
 
-# Definieer de locatie van de foto's en het output HTML-bestand
-foto_dir = 'contents/fotos'
-output_html = 'pagina.html'
+def generate_html():
+    # Vind alle bestanden met de gegeven extensies
+    extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
+    image_files = []
+    for ext in extensions:
+        image_files.extend(glob.glob(f'contents/fotos/*.{ext}'))
 
-# Begin HTML, CSS en JavaScript
-html_start = """<!DOCTYPE html>
+    # Sorteer de bestanden (optioneel)
+    image_files.sort()
+
+    # Begin met het genereren van HTML
+    html_content = """
+<!DOCTYPE html>
 <html>
 <head>
     <title>Foto Slideshow</title>
-    <meta http-equiv="refresh" content="60"> # verander in 3600 bij productie
     <style>
-        #slideshow {
-            width: 100%;
-            max-height: 100vh;
-            overflow: hidden;
-        }
-        .slide {
-            width: 100%;
-            max-height: 100vh;
-            display: none;
-        }
-        .slide:first-child {
-            display: block;
-        }
+        /* Voeg hier je CSS toe */
     </style>
+    <meta http-equiv="refresh" content="3600">
 </head>
 <body>
+
 <div id="slideshow">
 """
 
-# Verkrijg alle fotobestanden
-foto_files = [f for f in os.listdir(foto_dir) if os.path.isfile(os.path.join(foto_dir, f))]
-foto_files.sort()  # Sorteer de bestanden, indien nodig
+    # Voeg afbeeldingen toe aan HTML
+    for image_file in image_files:
+        rel_path = os.path.relpath(image_file, start='.')
+        html_content += f'    <img src="{rel_path}" alt="{rel_path}">\n'
 
-# Genereer HTML voor foto's
-foto_html = ''
-for foto in foto_files:
-    foto_path = os.path.join('contents/fotos', foto)
-    foto_html += f'    <img src="{foto_path}" class="slide">\n'
+    # Voeg script toe voor het wisselen van de foto's
+    html_content += """
+</div>
 
-# Eindig HTML, CSS en JavaScript
-html_end = """</div>
 <script>
-    var slideIndex = 0;
-    function showSlides() {
-        var i;
-        var slides = document.getElementsByClassName("slide");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";  
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}
-        slides[slideIndex-1].style.display = "block";  
-        setTimeout(showSlides, 2000);
+    var index = 0;
+    function showNextImage() {
+        var images = document.querySelectorAll("#slideshow img");
+        images[index].style.display = "none";
+        index = (index + 1) % images.length;
+        images[index].style.display = "block";
     }
-    showSlides();
+    setInterval(showNextImage, 2000);
 </script>
+
 </body>
 </html>
 """
 
-# Combineer alles en schrijf naar het output HTML-bestand
-with open(output_html, 'w') as f:
-    f.write(html_start + foto_html + html_end)
+    # Schrijf de HTML naar een bestand
+    with open('pagina.html', 'w') as f:
+        f.write(html_content)
 
-print(f"'{output_html}' is succesvol gegenereerd.")
+# Roep de functie aan
+generate_html()
