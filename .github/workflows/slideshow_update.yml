@@ -18,9 +18,11 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Generate HTML
+    - name: Get Photos
       run: python get_fotos.py
-      run: python generate_html.py  
+
+    - name: Generate HTML
+      run: python generate_html.py
 
     - name: Check for changes
       id: git-check
