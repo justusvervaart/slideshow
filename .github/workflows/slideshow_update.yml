@@ -2,6 +2,8 @@ name: Update Slideshow
 
 on:
   push:
+     paths:
+      - 'contents/fotos/**'
   workflow_dispatch:
   schedule:
     - cron: '0 * * * *'
