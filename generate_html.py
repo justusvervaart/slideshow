@@ -1,10 +1,10 @@
 import os
 
-# Definieer de locatie van de foto's en de output HTML-bestand
+# Definieer de locatie van de foto's en het output HTML-bestand
 foto_dir = 'contents/fotos'
 output_html = 'pagina.html'
 
-# Start de HTML, CSS en JavaScript
+# Begin HTML, CSS en JavaScript
 html_start = """<!DOCTYPE html>
 <html>
 <head>
@@ -12,16 +12,15 @@ html_start = """<!DOCTYPE html>
     <style>
         #slideshow {
             width: 100%;
-            height: auto;
+            max-height: 100vh;
             overflow: hidden;
         }
         .slide {
-            max-width: 100%;
+            width: 100%;
             max-height: 100vh;
-            object-fit: cover;
             display: none;
         }
-        .slide:first-of-type {
+        .slide:first-child {
             display: block;
         }
     </style>
@@ -30,27 +29,28 @@ html_start = """<!DOCTYPE html>
 <div id="slideshow">
 """
 
-# Verkrijg alle foto-bestanden
+# Verkrijg alle fotobestanden
 foto_files = [f for f in os.listdir(foto_dir) if os.path.isfile(os.path.join(foto_dir, f))]
 foto_files.sort()  # Sorteer de bestanden, indien nodig
 
-# Genereer de HTML voor de foto's
+# Genereer HTML voor foto's
 foto_html = ''
 for foto in foto_files:
     foto_path = os.path.join('contents/fotos', foto)
     foto_html += f'    <img src="{foto_path}" class="slide">\n'
 
-# Eindig de HTML, CSS en JavaScript
+# Eindig HTML, CSS en JavaScript
 html_end = """</div>
 <script>
-    let slideIndex = 0;
+    var slideIndex = 0;
     function showSlides() {
-        let slides = document.getElementsByClassName("slide");
-        for (let i = 0; i < slides.length; i++) {
+        var i;
+        var slides = document.getElementsByClassName("slide");
+        for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";  
         }
         slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}    
+        if (slideIndex > slides.length) {slideIndex = 1}
         slides[slideIndex-1].style.display = "block";  
         setTimeout(showSlides, 2000);
     }
