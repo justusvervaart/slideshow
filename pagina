@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Foto Slideshow</title>
+    <style>
+        /* Voeg hier je CSS toe */
+    </style>
+</head>
+<body>
+
+<div id="slideshow">
+    <!-- Slideshow afbeeldingen komen hier -->
+</div>
+
+<script>
+    // Voeg hier je JavaScript toe
+    fetch('https://api.github.com/repos/justusvervaart/slideshow/fotos')
+    .then(response => response.json())
+    .then(data => {
+        // Verwerk de foto's en voeg ze toe aan de slideshow
+    });
+</script>
+
+</body>
+</html>
