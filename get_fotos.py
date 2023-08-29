@@ -1,12 +1,16 @@
 import imaplib
 import email
 import os
+from email.header import decode_header
 
 # Gmail IMAP instellingen van omgevingsvariabelen
 host = os.environ.get('EMAIL_HOST', 'imap.gmail.com')
 port = int(os.environ.get('EMAIL_PORT', 993))
 user = os.environ.get('EMAIL_USER', 'default_user@gmail.com')
 password = os.environ.get('EMAIL_PASSWORD', 'default_password')
+
+# Opslagdirectory
+storage_directory = '/contents/fotos'  # Pas dit aan naar je specifieke directory
 
 # Verbind met Gmail
 mail = imaplib.IMAP4_SSL(host, port)
@@ -16,11 +20,6 @@ mail.select('inbox')
 # Zoek ongelezen e-mails
 status, messages = mail.search(None, '(UNSEEN)')
 email_ids = messages[0].split()
-
-# Zorg ervoor dat de opslagmap bestaat
-opslag_map = 'contents/fotos'
-if not os.path.exists(opslag_map):
-    os.makedirs(opslag_map)
 
 # Loop door elke e-mail en download bijlagen en inline afbeeldingen
 for e_id in email_ids:
