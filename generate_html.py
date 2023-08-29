@@ -19,13 +19,20 @@ def generate_html():
     <title>Foto Slideshow</title>
     <style>
         /* Zorg ervoor dat de afbeelding altijd op het scherm past */
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
         #slideshow img {
             max-width: 100%;
             max-height: 100vh;
             object-fit: contain;
+            margin: auto;
+            display: block;
         }
     </style>
-    <meta http-equiv="refresh" content="60">
+    <meta http-equiv="refresh" content="3600">
 </head>
 <body>
 
