@@ -17,6 +17,11 @@ mail.select('inbox')
 status, messages = mail.search(None, '(UNSEEN)')
 email_ids = messages[0].split()
 
+# Zorg ervoor dat de opslagmap bestaat
+opslag_map = 'contents/fotos'
+if not os.path.exists(opslag_map):
+    os.makedirs(opslag_map)
+
 # Loop door elke e-mail en download bijlagen
 for e_id in email_ids:
     resp, msg_data = mail.fetch(e_id, '(RFC822)')
@@ -29,6 +34,6 @@ for e_id in email_ids:
             continue
         filename = part.get_filename()
         if filename:
-            filepath = os.path.join('/jouw/opslag/directory', filename)
+            filepath = os.path.join(opslag_map, filename)
             with open(filepath, 'wb') as f:
                 f.write(part.get_payload(decode=True))
