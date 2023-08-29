@@ -1,54 +1,24 @@
-import requests
+import os
 
-def update_html(repo_user, repo_name, folder, html_file):
-    url = f"https://api.github.com/repos/justusvervaart/slideshow/contents/fotos"
-    
-    r = requests.get(url)
-    
-    if r.status_code != 200:
-        print(f"Fout: Kan de inhoud niet ophalen. Status code: {r.status_code}")
-        return
-    
-    files = r.json()
-    
-    img_tags = []
-    
-    for file in files:
-        if file['type'] == 'file' and (file['name'].endswith('.jpg') or file['name'].endswith('.png')):
-            img_tags.append(f'<img src="{file["download_url"]}" alt="Afbeelding" />')
-    
-    html_content = f'''
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Foto Slideshow</title>
-    <style>
-        img {{
-            width: 300px;
-            height: 200px;
-            margin: 10px;
-        }}
-    </style>
-</head>
-<body>
+def generate_html():
+    img_folder = "contents/fotos"
+    img_files = [f for f in os.listdir(img_folder) if f.endswith('.jpg') or f.endswith('.png')]
 
-<div id="slideshow">
-    {''.join(img_tags)}
-</div>
+    with open("pagina.html", "w") as f:
+        f.write("<!DOCTYPE html>\n")
+        f.write("<html>\n")
+        f.write("<head>\n")
+        f.write("    <title>Foto Slideshow</title>\n")
+        f.write("</head>\n")
+        f.write("<body>\n")
+        f.write("    <div id='slideshow'>\n")
 
-</body>
-</html>
-    '''
+        for img_file in img_files:
+            f.write(f"        <img src='{img_folder}/{img_file}' alt='{img_file}'>\n")
 
-    with open(html_file, 'w') as f:
-        f.write(html_content)
+        f.write("    </div>\n")
+        f.write("</body>\n")
+        f.write("</html>\n")
 
-    print(f"{html_file} is bijgewerkt.")
-
-if __name__ == '__main__':
-    REPO_USER = 'justusvervaart'
-    REPO_NAME = 'slideshow'
-    FOLDER = 'contents/fotos'
-    HTML_FILE = 'pagina.html'
-
-    update_html(REPO_USER, REPO_NAME, FOLDER, HTML_FILE)
+if __name__ == "__main__":
+    generate_html()
