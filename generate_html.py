@@ -25,7 +25,7 @@ def generate_html():
             object-fit: contain;
         }
     </style>
-    <meta http-equiv="refresh" content="3600">
+    <meta http-equiv="refresh" content="60">
 </head>
 <body>
 
