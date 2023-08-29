@@ -19,7 +19,8 @@ jobs:
         python-version: '3.x'
 
     - name: Generate HTML
-      run: python generate_html.py  # Of welk commando je ook gebruikt om de HTML te genereren
+      run: python get_fotos.py
+      run: python generate_html.py  
 
     - name: Check for changes
       id: git-check
