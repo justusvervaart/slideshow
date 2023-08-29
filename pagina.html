@@ -20,9 +20,6 @@
 <script>
     // Voeg hier je JavaScript toe
     fetch('https://api.github.com/repos/justusvervaart/slideshow/contents/fotos', {
-        headers: {
-            'Authorization': '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'
-        }
     })
     .then(response => {
         if (!response.ok) {
