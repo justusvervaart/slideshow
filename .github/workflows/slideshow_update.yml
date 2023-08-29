@@ -18,9 +18,6 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Get Photos
-      run: python get_fotos.py
-
     - name: Generate HTML
       run: python generate_html.py
 
