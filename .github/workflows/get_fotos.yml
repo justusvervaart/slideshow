@@ -6,7 +6,7 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    - cron: '30 * * * *'  # Dit draait het script elk uur. Wijzig dit volgens je eigen behoeften
+    - cron: '*/5 * * * *'  # Dit draait het script elk uur. Wijzig dit volgens je eigen behoeften
 
 jobs:
   run-python-script:
