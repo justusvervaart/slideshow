@@ -18,7 +18,12 @@ def generate_html():
 <head>
     <title>Foto Slideshow</title>
     <style>
-        /* Voeg hier je CSS toe */
+        /* Zorg ervoor dat de afbeelding altijd op het scherm past */
+        #slideshow img {
+            max-width: 100%;
+            max-height: 100vh;
+            object-fit: contain;
+        }
     </style>
     <meta http-equiv="refresh" content="3600">
 </head>
@@ -30,7 +35,7 @@ def generate_html():
     # Voeg afbeeldingen toe aan HTML
     for image_file in image_files:
         rel_path = os.path.relpath(image_file, start='.')
-        html_content += f'    <img src="{rel_path}" alt="{rel_path}">\n'
+        html_content += f'    <img src="{rel_path}" alt="{rel_path}" style="display:none;">\n'
 
     # Voeg script toe voor het wisselen van de foto's
     html_content += """
@@ -45,6 +50,8 @@ def generate_html():
         images[index].style.display = "block";
     }
     setInterval(showNextImage, 2000);
+    // Toon de eerste afbeelding
+    showNextImage();
 </script>
 
 </body>
