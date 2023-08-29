@@ -3,7 +3,7 @@ import glob
 
 def generate_html():
     # Vind alle bestanden met de gegeven extensies
-    extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
+    extensions = ['jpg', 'jpeg', 'JPG', 'JPEG','HEIC','heic']
     image_files = []
     for ext in extensions:
         image_files.extend(glob.glob(f'contents/fotos/*.{ext}'))
