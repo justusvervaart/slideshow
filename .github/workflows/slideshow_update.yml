@@ -29,4 +29,4 @@ jobs:
         git config user.email "actions@users.noreply.github.com"
         git add pagina.html
         git commit -m "Update slideshow HTML"
-        git push https://${{ secrets.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 }}@github.com/justusvervaart/slideshow.git
+        git push https://${{ secrets.MY_PERSONAL_TOKEN }}@github.com/justusvervaart/slideshow.git
