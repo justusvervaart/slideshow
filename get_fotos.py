@@ -22,18 +22,29 @@ opslag_map = 'contents/fotos'
 if not os.path.exists(opslag_map):
     os.makedirs(opslag_map)
 
-# Loop door elke e-mail en download bijlagen
+# Loop door elke e-mail en download bijlagen en inline afbeeldingen
 for e_id in email_ids:
     resp, msg_data = mail.fetch(e_id, '(RFC822)')
     raw_email = msg_data[0][1]
     msg = email.message_from_bytes(raw_email)
     for part in msg.walk():
+        content_disposition = part.get("Content-Disposition")
+        content_type = part.get_content_type()
+
         if part.get_content_maintype() == 'multipart':
             continue
-        if part.get('Content-Disposition') is None:
+        if content_disposition is None and 'image' not in content_type:
             continue
+
         filename = part.get_filename()
-        if filename:
-            filepath = os.path.join(opslag_map, filename)
-            with open(filepath, 'wb') as f:
-                f.write(part.get_payload(decode=True))
+        if not filename:
+            # Als er geen bestandsnaam is, genereer een.
+            ext = mimetypes.guess_extension(part.get_content_type())
+            if not ext:
+                # Gebruik een standaard extensie
+                ext = '.bin'
+            filename = 'img-' + str(int(time.time())) + ext
+
+        filepath = os.path.join(storage_directory, filename)
+        with open(filepath, 'wb') as f:
+            f.write(part.get_payload(decode=True))
