@@ -6,7 +6,7 @@ import os
 host = 'imap.gmail.com'
 port = 993
 user = 'fotosvooromamarjan@gmail.com'
-password = 'H3llr41s3r'
+password = 'zjbwpsnhgtlpvrwj'
 
 # Verbind met Gmail
 mail = imaplib.IMAP4_SSL(host, port)
