@@ -1,44 +1,31 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Foto Slideshow</title>
-    <meta http-equiv="refresh" content="60"> # verander in 3600 bij productie
     <style>
-        #slideshow {
-            width: 100%;
-            max-height: 100vh;
-            overflow: hidden;
-        }
-        .slide {
-            width: 100%;
-            max-height: 100vh;
-            display: none;
-        }
-        .slide:first-child {
-            display: block;
-        }
+        /* Voeg hier je CSS toe */
     </style>
+    <meta http-equiv="refresh" content="3600">
 </head>
 <body>
+
 <div id="slideshow">
-    <img src="contents/fotos/IMG_1642.JPG" class="slide">
-    <img src="contents/fotos/IMG_1755.JPG" class="slide">
-    <img src="contents/fotos/test.txt" class="slide">
+    <img src="contents/fotos/IMG_1642.JPG" alt="contents/fotos/IMG_1642.JPG">
+    <img src="contents/fotos/IMG_1755.JPG" alt="contents/fotos/IMG_1755.JPG">
+
 </div>
+
 <script>
-    var slideIndex = 0;
-    function showSlides() {
-        var i;
-        var slides = document.getElementsByClassName("slide");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";  
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}
-        slides[slideIndex-1].style.display = "block";  
-        setTimeout(showSlides, 2000);
+    var index = 0;
+    function showNextImage() {
+        var images = document.querySelectorAll("#slideshow img");
+        images[index].style.display = "none";
+        index = (index + 1) % images.length;
+        images[index].style.display = "block";
     }
-    showSlides();
+    setInterval(showNextImage, 2000);
 </script>
+
 </body>
 </html>
