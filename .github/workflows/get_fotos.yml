@@ -33,9 +33,9 @@ jobs:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
 
-    - name: Run update_slideshow.py
-      run: python update_slideshow.py
-
+    - name: Run generate_html.py
+      run: python generate_html.py
+      
     - name: Commit and push changes
       run: |
         git config user.name "Automated"
