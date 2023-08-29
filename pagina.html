@@ -4,15 +4,20 @@
 <head>
     <title>Foto Slideshow</title>
     <style>
-        /* Voeg hier je CSS toe */
+        /* Zorg ervoor dat de afbeelding altijd op het scherm past */
+        #slideshow img {
+            max-width: 100%;
+            max-height: 100vh;
+            object-fit: contain;
+        }
     </style>
     <meta http-equiv="refresh" content="3600">
 </head>
 <body>
 
 <div id="slideshow">
-    <img src="contents/fotos/IMG_1642.JPG" alt="contents/fotos/IMG_1642.JPG">
-    <img src="contents/fotos/IMG_1755.JPG" alt="contents/fotos/IMG_1755.JPG">
+    <img src="contents/fotos/IMG_1642.JPG" alt="contents/fotos/IMG_1642.JPG" style="display:none;">
+    <img src="contents/fotos/IMG_1755.JPG" alt="contents/fotos/IMG_1755.JPG" style="display:none;">
 
 </div>
 
@@ -25,6 +30,8 @@
         images[index].style.display = "block";
     }
     setInterval(showNextImage, 2000);
+    // Toon de eerste afbeelding
+    showNextImage();
 </script>
 
 </body>
