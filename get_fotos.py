@@ -2,11 +2,11 @@ import imaplib
 import email
 import os
 
-# Gmail IMAP instellingen
-host = 'imap.gmail.com'
-port = 993
-user = 'fotosvooromamarjan@gmail.com'
-password = 'zjbwpsnhgtlpvrwj'
+# Gmail IMAP instellingen van omgevingsvariabelen
+host = os.environ.get('EMAIL_HOST', 'imap.gmail.com')
+port = int(os.environ.get('EMAIL_PORT', 993))
+user = os.environ.get('EMAIL_USER', 'default_user@gmail.com')
+password = os.environ.get('EMAIL_PASSWORD', 'default_password')
 
 # Verbind met Gmail
 mail = imaplib.IMAP4_SSL(host, port)
