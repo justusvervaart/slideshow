@@ -9,6 +9,7 @@ html_start = """<!DOCTYPE html>
 <html>
 <head>
     <title>Foto Slideshow</title>
+    <meta http-equiv="refresh" content="60"> # verander in 3600 bij productie
     <style>
         #slideshow {
             width: 100%;
