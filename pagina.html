@@ -3,10 +3,11 @@
 <head>
     <title>Foto Slideshow</title>
     <style>
-        /* Je CSS hier */
-        #slideshow img {
+        /* Voeg hier je CSS toe */
+        img {
             width: 300px;
-            height: auto;
+            height: 200px;
+            margin: 10px;
         }
     </style>
 </head>
@@ -17,7 +18,12 @@
 </div>
 
 <script>
-    fetch('https://api.github.com/repos/justusvervaart/slideshow/contents/fotos')
+    // Voeg hier je JavaScript toe
+    fetch('https://api.github.com/repos/justusvervaart/slideshow/contents/fotos', {
+        headers: {
+            'Authorization': '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'
+        }
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Netwerkproblemen bij het ophalen van de data.');
@@ -25,9 +31,8 @@
         return response.json();
     })
     .then(data => {
-        console.log(data); // Verifieer de opgehaalde data
         const imgContainer = document.getElementById('slideshow');
-
+        
         data.forEach(file => {
             if (file.type === 'file' && (file.name.endsWith('.jpg') || file.name.endsWith('.png'))) {
                 const img = document.createElement('img');
