@@ -18,7 +18,7 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Generate HTML
+    - name: Run Get Fotos
       run: python get_fotos.py
 
     - name: Commit and push
