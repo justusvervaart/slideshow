@@ -57,4 +57,4 @@ for e_id in email_ids:
             image = image.convert("RGB")  # Converteer naar RGB als het een andere kleurmodus is
             
             with open(filepath, 'wb') as f:
-                image.save(f, format="JPEG", optimize=True, quality=40)  # Pas de kwaliteitsparameter aan naar wens
+                image.save(f, format="JPEG", optimize=True, quality=20)  # Pas de kwaliteitsparameter aan naar wens
