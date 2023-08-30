@@ -54,7 +54,8 @@ def generate_html():
         index = (index + 1) % slides.length;
         slides[index].style.display = "block";
     }
-    setInterval(showNextImage, 300000); // iedere 5 minuten een nieuwe foto om mijn moeder niet teveel te verwarren
+    setInterval(showNextImage, 2000); // iedere 5 minuten een nieuwe foto om mijn moeder niet teveel te verwarren
+    //setInterval(showNextImage, 300000); // iedere 5 minuten een nieuwe foto om mijn moeder niet teveel te verwarren
     // Toon de eerste afbeelding
     showNextImage();
 </script>
