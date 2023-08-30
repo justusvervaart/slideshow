@@ -13,7 +13,9 @@ else:
 
     # Sorteer de bestanden op aanmaakdatum
     files.sort(key=os.path.getctime, reverse=True)
-
+    
+    print(files)  # Debugging: print de gesorteerde lijst
+    
     # Behoud alleen de 30 meest recente
     for file in files[3:]:
         os.remove(file)
