@@ -33,7 +33,7 @@ def generate_html():
             display: block;
         }
     </style>
-    <meta http-equiv="refresh" content="30">
+    <meta http-equiv="refresh" content="3600"> # ieder uur pagina refreshen om nieuwe fotos te tonen
 </head>
 <body>
 
