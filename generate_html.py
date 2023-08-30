@@ -57,7 +57,7 @@ def generate_html():
         index = (index + 1) % images.length;
         images[index].style.display = "block";
     }
-    setInterval(showNextImage, 10000);
+    setInterval(showNextImage, 300000);
     // Toon de eerste afbeelding
     showNextImage();
 </script>
