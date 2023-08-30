@@ -1,22 +1,21 @@
 import os
 import glob
-import csv  # Nieuw toegevoegd voor het lezen van bijschriften
+import csv
 
 def read_captions():
     captions = {}
     try:
-        with open('contents/captions.csv', 'r', encoding='utf-8') as f:
-            csv_reader = csv.reader(f)
-            for row in csv_reader:
-                if len(row) == 2:  # Zorg ervoor dat er voldoende waarden zijn om uit te pakken
-                    filename, caption = row
-                    captions[filename] = caption
+        with open('contents/captions.csv', mode='r') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                filename, caption = row
+                captions[filename] = caption
     except FileNotFoundError:
-        pass  # Het bestand bestaat niet, ga gewoon verder
+        print("Geen captions.csv gevonden.")
     return captions
 
 def generate_html():
-    # Lees de bijschriften
+    # Lees de onderschriften uit het CSV-bestand
     captions = read_captions()
 
     # Vind alle bestanden met de gegeven extensies
@@ -29,33 +28,35 @@ def generate_html():
     image_files.sort()
 
     # Begin met het genereren van HTML
-    html_content = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Foto Slideshow</title>
-    <style>
-        /* Styles... */
-    </style>
-</head>
-<body>
+    # ... (geen wijzigingen hier)
 
-<div id="slideshow">
-"""
-
-    # Voeg afbeeldingen en hun bijschriften toe aan HTML
+    # Voeg afbeeldingen en onderschriften toe aan HTML
     for image_file in image_files:
-        filename = os.path.basename(image_file)
         rel_path = os.path.relpath(image_file, start='.')
-        caption = captions.get(filename, '')  # Gebruik een leeg bijschrift als er geen bijschrift is
-        html_content += f'    <div class="slide"><img src="{rel_path}" alt="{rel_path}"><p>{caption}</p></div>\n'
+        filename = os.path.basename(image_file)
+        caption = captions.get(filename, '')  # Haal het onderschrift op als het bestaat
+        html_content += f'    <div class="slide" style="display:none;">\n'
+        html_content += f'        <img src="{rel_path}" alt="{rel_path}">\n'
+        html_content += f'        <p>{caption}</p>\n'
+        html_content += f'    </div>\n'
 
-    # Voeg Javascript toe
+    # Voeg script toe voor het wisselen van de foto's
+
     html_content += """
 </div>
 
 <script>
-    // Javascript code...
+    var index = 0;
+    function showNextImage() {
+        var slides = document.querySelectorAll(".slide");
+        slides[index].style.display = "none";
+        index = (index + 1) % slides.length;
+        slides[index].style.display = "block";
+    }
+    setInterval(showNextImage, 2000); // iedere 5 minuten een nieuwe foto om mijn moeder niet teveel te verwarren
+    //setInterval(showNextImage, 300000); // iedere 5 minuten een nieuwe foto om mijn moeder niet teveel te verwarren
+    // Toon de eerste afbeelding
+    showNextImage();
 </script>
 
 </body>
@@ -63,7 +64,7 @@ def generate_html():
 """
 
     # Schrijf de HTML naar een bestand
-    with open('pagina.html', 'w', encoding='utf-8') as f:
+    with open('pagina.html', 'w') as f:
         f.write(html_content)
 
 # Roep de functie aan
