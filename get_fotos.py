@@ -3,7 +3,8 @@ import email
 import os
 from email.header import decode_header
 from PIL import Image
-import io  # Nieuw geïmporteerd
+import io
+from pyheif import read  # Nieuw toegevoegd
 
 # Gmail IMAP instellingen van omgevingsvariabelen
 host = os.environ.get('EMAIL_HOST', 'imap.gmail.com')
@@ -47,14 +48,25 @@ for e_id in email_ids:
             if content_type == 'image/jpeg' or content_type == 'image/png':
                 count += 1
                 filename = f"{decoded_subject}_{count}.jpg"
+
+        filepath = os.path.join(opslag_map, filename)
+        image_data = part.get_payload(decode=True)
         
-        if filename:
-            filepath = os.path.join(opslag_map, filename)
-            
-            # Comprimeer de afbeelding met Pillow
-            image_data = part.get_payload(decode=True)
+        # HEIC naar JPG conversie
+        if filename.lower().endswith('.heic'):
+            heif_file = read(io.BytesIO(image_data))
+            image = Image.frombytes(
+                heif_file.mode, 
+                heif_file.size, 
+                heif_file.data,
+                "raw",
+                heif_file.mode,
+                heif_file.stride,
+            )
+            filepath = filepath.replace(".heic", ".jpg")
+        else:
             image = Image.open(io.BytesIO(image_data))
-            image = image.convert("RGB")  # Converteer naar RGB als het een andere kleurmodus is
-            
-            with open(filepath, 'wb') as f:
-                image.save(f, format="JPEG", optimize=True, quality=20)  # Pas de kwaliteitsparameter aan naar wens
+        
+        image = image.convert("RGB")  # Converteer naar RGB als het een andere kleurmodus is
+        with open(filepath, 'wb') as f:
+            image.save(f, format="JPEG", optimize=True, quality=20)  # Pas de kwaliteitsparameter aan naar wens
