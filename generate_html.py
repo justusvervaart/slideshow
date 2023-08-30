@@ -55,6 +55,9 @@ def generate_html():
         .slide {
             display: none;
         }
+        .slide p {
+            color: white;
+        }
     </style>
     <meta http-equiv="refresh" content="3600">
 </head>
