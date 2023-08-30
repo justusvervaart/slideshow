@@ -26,7 +26,6 @@ def generate_html():
     # Debug: Print de inhoud van de captions dictionary
     print(f"Captions: {captions}")
 
-    
     extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
     image_files = []
     for ext in extensions:
@@ -68,7 +67,7 @@ def generate_html():
     
     for image_file in image_files:
         rel_path = os.path.relpath(image_file, start='.')
-        filename = os.path.basename(image_file)
+        filename = os.path.basename(image_file).lower() 
         caption = captions.get(filename, '')  
         html_content += f'    <div class="slide">\n'
         html_content += f'        <img src="{rel_path}" alt="{rel_path}">\n'
