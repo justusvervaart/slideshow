@@ -8,8 +8,9 @@ def read_captions():
         with open('contents/captions.csv', mode='r') as f:
             reader = csv.reader(f)
             for row in reader:
-                filename, caption = row
-                captions[filename] = caption
+                if len(row) == 2:  # Zorg ervoor dat er voldoende waarden zijn om uit te pakken
+                    filename, caption = row
+                    captions[filename] = caption
     except FileNotFoundError:
         print("Geen captions.csv gevonden.")
     return captions
