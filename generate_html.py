@@ -8,69 +8,78 @@ def read_captions():
         with open('contents/captions.csv', mode='r') as f:
             reader = csv.reader(f)
             for row in reader:
-                if len(row) == 2:  # Zorg ervoor dat er voldoende waarden zijn om uit te pakken
-                    filename, caption = row
-                    captions[filename] = caption
+                filename, caption = row
+                captions[filename] = caption
     except FileNotFoundError:
         print("Geen captions.csv gevonden.")
     return captions
 
 def generate_html():
-    # Lees de onderschriften uit het CSV-bestand
     captions = read_captions()
-
-    # Vind alle bestanden met de gegeven extensies
+    
     extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
     image_files = []
     for ext in extensions:
         image_files.extend(glob.glob(f'contents/fotos/*.{ext}'))
-
-    # Sorteer de bestanden (optioneel)
+        
     image_files.sort()
 
-    # Begin met het genereren van HTML
     html_content = """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Foto Slideshow</title>
-        <!-- Andere HTML-head code -->
-    </head>
-    <body>
-    <div id="slideshow">
-    """
-
-    # Voeg afbeeldingen en onderschriften toe aan HTML
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Foto Slideshow</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+        .slide img {
+            max-width: 100%;
+            max-height: 100vh;
+            object-fit: contain;
+            margin: auto;
+            display: block;
+        }
+        .slide {
+            display: none;
+        }
+    </style>
+    <meta http-equiv="refresh" content="3600">
+</head>
+<body>
+<div id="slideshow">
+"""
+    
     for image_file in image_files:
         rel_path = os.path.relpath(image_file, start='.')
         filename = os.path.basename(image_file)
-        caption = captions.get(filename, '')  # Haal het onderschrift op als het bestaat
-        html_content += f'    <div class="slide" style="display:none;">\n'
+        caption = captions.get(filename, '')  
+        html_content += f'    <div class="slide">\n'
         html_content += f'        <img src="{rel_path}" alt="{rel_path}">\n'
         html_content += f'        <p>{caption}</p>\n'
         html_content += f'    </div>\n'
-
-    # Voeg script toe voor het wisselen van de foto's
+        
     html_content += """
-    </div>
-    <script>
-        var index = 0;
-        function showNextImage() {
-            var slides = document.querySelectorAll(".slide");
-            slides[index].style.display = "none";
-            index = (index + 1) % slides.length;
-            slides[index].style.display = "block";
-        }
-        setInterval(showNextImage, 300000); // iedere 5 minuten een nieuwe foto
-        showNextImage(); // Toon de eerste afbeelding
-    </script>
-    </body>
-    </html>
-    """
-
-    # Schrijf de HTML naar een bestand
+</div>
+<script>
+    var index = 0;
+    function showNextImage() {
+        var slides = document.querySelectorAll(".slide");
+        slides[index].style.display = "none";
+        index = (index + 1) % slides.length;
+        slides[index].style.display = "block";
+    }
+    setInterval(showNextImage, 2000);
+    showNextImage();
+</script>
+</body>
+</html>
+"""
+    
     with open('pagina.html', 'w') as f:
         f.write(html_content)
 
-# Roep de functie aan
 generate_html()
