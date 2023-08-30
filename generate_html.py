@@ -97,7 +97,7 @@ def generate_html():
         index = (index + 1) % slides.length;
         slides[index].style.display = "block";
     }
-    setInterval(showNextImage, 2000);
+    setInterval(showNextImage, 30000);
     showNextImage();
 </script>
 </body>
