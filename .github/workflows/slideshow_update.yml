@@ -26,6 +26,15 @@ jobs:
     - name: Run cleanup script
       run: python delete_fotos.py
 
+    - name: Stage changes
+      run: git add -A
+
+    - name: Commit changes
+      run: git commit -m "Verwijder overtollige foto's" || echo "Geen veranderingen om te commiten"
+
+    - name: Push changes
+      run: git push || echo "Geen veranderingen om te pushen"
+
     - name: Check for changes
       id: git-check
       run: |
