@@ -80,9 +80,10 @@ def generate_html():
         rel_path = os.path.relpath(image_file, start='.')
         filename = os.path.basename(image_file).lower() 
         caption = captions.get(filename, '')  
-        html_content += f'    <div class="slide">\n'
+        html_content += f'    <div class="slide" style="display:none;">\n'
         html_content += f'        <img src="{rel_path}" alt="{rel_path}">\n'
-        html_content += f'        <p>{caption}</p>\n'
+        if caption:  # Alleen toevoegen als er een caption is
+            html_content += f'        <p>{caption}</p>\n'
         html_content += f'    </div>\n'
         
     html_content += """
