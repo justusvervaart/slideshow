@@ -2,6 +2,8 @@ import imaplib
 import email
 import os
 from email.header import decode_header
+from PIL import Image
+import io  # Nieuw geïmporteerd
 
 # Gmail IMAP instellingen van omgevingsvariabelen
 host = os.environ.get('EMAIL_HOST', 'imap.gmail.com')
@@ -48,5 +50,11 @@ for e_id in email_ids:
         
         if filename:
             filepath = os.path.join(opslag_map, filename)
+            
+            # Comprimeer de afbeelding met Pillow
+            image_data = part.get_payload(decode=True)
+            image = Image.open(io.BytesIO(image_data))
+            image = image.convert("RGB")  # Converteer naar RGB als het een andere kleurmodus is
+            
             with open(filepath, 'wb') as f:
-                f.write(part.get_payload(decode=True))
+                image.save(f, format="JPEG", optimize=True, quality=40)  # Pas de kwaliteitsparameter aan naar wens
