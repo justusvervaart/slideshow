@@ -8,11 +8,14 @@ def read_captions():
         with open('contents/captions.csv', mode='r') as f:
             reader = csv.reader(f)
             for row in reader:
-                if len(row) == 2:  # Verzeker dat de rij 2 waarden heeft
-                    filename, caption = row
+                if len(row) == 0:
+                    print("Ongeldige rij in captions.csv: []")
+                    continue
+                if len(row) == 2:
+                    filepath, caption = row
                     captions[filepath] = caption
                 else:
-                    print(f'Ongeldige rij in captions.csv: {row}')
+                    print(f"Ongeldige rij in captions.csv: {row}")
     except FileNotFoundError:
         print("Geen captions.csv gevonden.")
     return captions
