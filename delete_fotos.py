@@ -12,7 +12,7 @@ else:
     files = glob.glob(f"{storage_directory}/*")
 
     # Sorteer de bestanden op aanmaakdatum
-    files.sort(key=os.path.getctime, reverse=True)
+    files.sort(key=os.path.getctime, reverse=False)
     
     print(files)  # Debugging: print de gesorteerde lijst
     
