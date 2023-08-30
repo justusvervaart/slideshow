@@ -52,7 +52,7 @@ for e_id in email_ids:
             image_data = part.get_payload(decode=True)
             
             # HEIC naar JPG conversie
-            if filename.lower().endswith('.heic'):
+            is_heic = (filename.lower().endswith('.heic') or filename.lower().endswith('.HEIC')) or content_type == 'image/heif'
                 heif_file = read(io.BytesIO(image_data))
                 image = Image.frombytes(
                     heif_file.mode,
