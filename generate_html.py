@@ -23,11 +23,18 @@ def read_captions():
 def generate_html():
     captions = read_captions()
     
+    # Debug: Print de inhoud van de captions dictionary
+    print(f"Captions: {captions}")
+
+    
     extensions = ['jpg', 'jpeg', 'JPG', 'JPEG']
     image_files = []
     for ext in extensions:
         image_files.extend(glob.glob(f'contents/fotos/*.{ext}'))
-        
+
+    # Debug: Print de verzamelde image files
+    print(f"Image files: {image_files}")
+    
     image_files.sort()
 
     html_content = """
