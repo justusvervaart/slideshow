@@ -1,53 +1,57 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Foto Slideshow</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <style>
-        /* Zorg ervoor dat de afbeelding altijd op het scherm past */
-        body {
-            background-color: black;
-            margin: 0;
-            padding: 0;
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Foto Slideshow</title>
+        <!-- Andere HTML-head code -->
+    </head>
+    <body>
+    <div id="slideshow">
+        <div class="slide" style="display:none;">
+        <img src="contents/fotos/IMG_1144.JPG" alt="contents/fotos/IMG_1144.JPG">
+        <p></p>
+    </div>
+    <div class="slide" style="display:none;">
+        <img src="contents/fotos/IMG_1261.JPG" alt="contents/fotos/IMG_1261.JPG">
+        <p></p>
+    </div>
+    <div class="slide" style="display:none;">
+        <img src="contents/fotos/IMG_1313.JPG" alt="contents/fotos/IMG_1313.JPG">
+        <p></p>
+    </div>
+    <div class="slide" style="display:none;">
+        <img src="contents/fotos/IMG_1454.JPG" alt="contents/fotos/IMG_1454.JPG">
+        <p></p>
+    </div>
+    <div class="slide" style="display:none;">
+        <img src="contents/fotos/IMG_1642.JPG" alt="contents/fotos/IMG_1642.JPG">
+        <p></p>
+    </div>
+    <div class="slide" style="display:none;">
+        <img src="contents/fotos/IMG_5030.JPG" alt="contents/fotos/IMG_5030.JPG">
+        <p></p>
+    </div>
+    <div class="slide" style="display:none;">
+        <img src="contents/fotos/img_1755.jpg" alt="contents/fotos/img_1755.jpg">
+        <p></p>
+    </div>
+    <div class="slide" style="display:none;">
+        <img src="contents/fotos/img_1914.jpg" alt="contents/fotos/img_1914.jpg">
+        <p></p>
+    </div>
+
+    </div>
+    <script>
+        var index = 0;
+        function showNextImage() {
+            var slides = document.querySelectorAll(".slide");
+            slides[index].style.display = "none";
+            index = (index + 1) % slides.length;
+            slides[index].style.display = "block";
         }
-        #slideshow img {
-            max-width: 100%;
-            max-height: 100vh;
-            object-fit: contain;
-            margin: auto;
-            display: block;
-        }
-    </style>
-    <meta http-equiv="refresh" content="3600"> // ververs de pagina ieder uur 
-</head>
-<body>
-
-<div id="slideshow">
-    <img src="contents/fotos/IMG_1144.JPG" alt="contents/fotos/IMG_1144.JPG" style="display:none;">
-    <img src="contents/fotos/IMG_1261.JPG" alt="contents/fotos/IMG_1261.JPG" style="display:none;">
-    <img src="contents/fotos/IMG_1313.JPG" alt="contents/fotos/IMG_1313.JPG" style="display:none;">
-    <img src="contents/fotos/IMG_1454.JPG" alt="contents/fotos/IMG_1454.JPG" style="display:none;">
-    <img src="contents/fotos/IMG_1642.JPG" alt="contents/fotos/IMG_1642.JPG" style="display:none;">
-    <img src="contents/fotos/IMG_5030.JPG" alt="contents/fotos/IMG_5030.JPG" style="display:none;">
-    <img src="contents/fotos/img_1755.jpg" alt="contents/fotos/img_1755.jpg" style="display:none;">
-    <img src="contents/fotos/img_1914.jpg" alt="contents/fotos/img_1914.jpg" style="display:none;">
-
-</div>
-
-<script>
-    var index = 0;
-    function showNextImage() {
-        var images = document.querySelectorAll("#slideshow img");
-        images[index].style.display = "none";
-        index = (index + 1) % images.length;
-        images[index].style.display = "block";
-    }
-    setInterval(showNextImage, 2000); // iedere 2 seconden een nieuwe foto voor testdoeleinden
-    //setInterval(showNextImage, 300000); // iedere 5 minuten een nieuwe foto om mijn moeder niet teveel te verwarren
-    // Toon de eerste afbeelding
-    showNextImage();
-</script>
-
-</body>
-</html>
+        setInterval(showNextImage, 300000); // iedere 5 minuten een nieuwe foto
+        showNextImage(); // Toon de eerste afbeelding
+    </script>
+    </body>
+    </html>
+    
