@@ -1,6 +1,7 @@
 import imaplib
 import email
 import os
+from email.header import decode_header
 
 # Gmail IMAP instellingen van omgevingsvariabelen
 host = os.environ.get('EMAIL_HOST', 'imap.gmail.com')
@@ -27,12 +28,24 @@ for e_id in email_ids:
     resp, msg_data = mail.fetch(e_id, '(RFC822)')
     raw_email = msg_data[0][1]
     msg = email.message_from_bytes(raw_email)
+    email_subject = msg["subject"]
+    decoded_subject, charset = decode_header(email_subject)[0]
+    if charset is not None:
+        decoded_subject = decoded_subject.decode(charset)
+    count = 0  # Teller voor inline afbeeldingen
+
     for part in msg.walk():
+        content_disposition = part.get("Content-Disposition", None)
+        content_type = part.get_content_type()
         if part.get_content_maintype() == 'multipart':
             continue
-        if part.get('Content-Disposition') is None:
-            continue
+
         filename = part.get_filename()
+        if not filename:
+            if content_type == 'image/jpeg' or content_type == 'image/png':
+                count += 1
+                filename = f"{decoded_subject}_{count}.jpg"
+        
         if filename:
             filepath = os.path.join(opslag_map, filename)
             with open(filepath, 'wb') as f:
