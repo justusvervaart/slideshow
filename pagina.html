@@ -19,7 +19,7 @@
             display: block;
         }
     </style>
-    <meta http-equiv="refresh" content="3600"> # ieder uur pagina refreshen om nieuwe fotos te tonen
+    <meta http-equiv="refresh" content="3600"> // ververs de pagina ieder uur 
 </head>
 <body>
 
@@ -42,7 +42,7 @@
         index = (index + 1) % images.length;
         images[index].style.display = "block";
     }
-    setInterval(showNextImage, 300000);
+    setInterval(showNextImage, 300000); // iedere 5 minuten een nieuwe foto om mijn moeder niet teveel te verwarren
     // Toon de eerste afbeelding
     showNextImage();
 </script>
