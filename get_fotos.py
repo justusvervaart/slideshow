@@ -4,7 +4,7 @@ import os
 from email.header import decode_header
 from PIL import Image
 import io
-from pyheif import read
+from pyheif import read  # Nieuw toegevoegd
 
 # Gmail IMAP instellingen van omgevingsvariabelen
 host = os.environ.get('EMAIL_HOST', 'imap.gmail.com')
@@ -38,21 +38,26 @@ for e_id in email_ids:
     count = 0  # Teller voor inline afbeeldingen
 
     for part in msg.walk():
+        content_disposition = part.get("Content-Disposition", None)
+        content_type = part.get_content_type()
         if part.get_content_maintype() == 'multipart':
             continue
 
         filename = part.get_filename()
+
+        is_heic = (filename.lower().endswith('.heic') or filename.lower().endswith('.HEIC')) if filename else False
+
         if not filename:
-            if part.get_content_type() in ['image/jpeg', 'image/png']:
+            if content_type == 'image/jpeg' or content_type == 'image/png':
                 count += 1
                 filename = f"{decoded_subject}_{count}.jpg"
-
+        
         if filename:
             filepath = os.path.join(opslag_map, filename)
             image_data = part.get_payload(decode=True)
             
             # HEIC naar JPG conversie
-            is_heic = (filename.lower().endswith('.heic') or filename.lower().endswith('.HEIC')) or content_type == 'image/heif'
+            if is_heic:
                 heif_file = read(io.BytesIO(image_data))
                 image = Image.frombytes(
                     heif_file.mode,
@@ -62,10 +67,10 @@ for e_id in email_ids:
                     heif_file.mode,
                     heif_file.stride,
                 )
-                filepath = filepath.replace(".heic", ".jpg")
+                filepath = filepath.lower().replace(".heic", ".jpg")
             else:
                 image = Image.open(io.BytesIO(image_data))
             
-            image = image.convert("RGB")
+            image = image.convert("RGB")  # Converteer naar RGB als het een andere kleurmodus is
             with open(filepath, 'wb') as f:
-                image.save(f, format="JPEG", optimize=True, quality=20)
+                image.save(f, format="JPEG", optimize=True, quality=20)  # Pas de kwaliteitsparameter aan naar wens
