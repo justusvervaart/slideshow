@@ -42,6 +42,7 @@ jobs:
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
         git add pagina.html
-        git add contents/fotos/*  # Voeg dit toe als je de nieuwe foto's ook wilt committen
+        git add contents/fotos/* 
+        git add contents/captions.csv
         git commit -m "Get Fotos From E-mail and Update Slideshow" || echo "No changes to commit"
         git push
