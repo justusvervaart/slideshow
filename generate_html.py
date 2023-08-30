@@ -66,6 +66,8 @@ def generate_html():
     width: 100%;
     box-sizing: border-box;
     font-family: 'Brush Script MT', cursive;
+    font-size: 4em;
+
 }
     </style>
     <meta http-equiv="refresh" content="3600">
