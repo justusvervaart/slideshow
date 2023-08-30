@@ -9,7 +9,7 @@ def read_captions():
             reader = csv.reader(f)
             for row in reader:
                 if not row:  # Sla lege rijen over
-                    continue
+                    continue 
                 filepath, caption = row
                 filename = os.path.basename(filepath)  # Haal alleen de bestandsnaam eruit
                 captions[filename.lower()] = caption  # Sla op in kleine letters
@@ -58,7 +58,7 @@ def generate_html():
 }
 .slide p {
     position: absolute;
-    bottom: 0;
+    bottom: 0;  
     left: 0;
     right: 0;
     color: white;
@@ -68,8 +68,7 @@ def generate_html():
     box-sizing: border-box;
     font-family: 'Brush Script MT', cursive;
     font-size: 4em;
-    text-align: center;  
-    font-weight: bold;  
+    text-align: center;
 }
     </style>
     <meta http-equiv="refresh" content="3600">
