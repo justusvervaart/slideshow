@@ -26,6 +26,11 @@ jobs:
     - name: Run cleanup script
       run: python delete_fotos.py
 
+    - name: Configure Git Author
+      run: |
+       git config user.name "Automated"
+       git config user.email "actions@users.noreply.github.com"
+
     - name: Stage changes
       run: git add -A
 
