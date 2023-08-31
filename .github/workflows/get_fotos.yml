@@ -6,8 +6,8 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'  # Dit draait het script elk uur. Wijzig dit volgens je eigen behoeften
-
+    - cron: '*/5 * * * *' 
+    
 jobs:
   run-python-script:
     runs-on: ubuntu-latest
