@@ -34,29 +34,29 @@ def generate_html():
     image_files.sort()
     
     html_content = """
-<!DOCTYPE html>
-<html>
-<head>
+    <!DOCTYPE html>
+    <html>
+    <head>
     <title>Foto Slideshow</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-        body {
+    body {
     background-color: black;
     margin: 0;
     padding: 0;
-}
-.slide img {
+    }
+    .slide img {
     max-width: 100%;
     max-height: 100vh;
     object-fit: contain;
     margin: auto;
     display: block;
-}
-.slide {
+    }
+    .slide {
     position: relative;
     display: none;
-}
-.slide p {
+    }
+    .slide p {
     position: absolute;
     bottom: 0;  
     left: 0;
@@ -69,13 +69,13 @@ def generate_html():
     font-family: 'Brush Script MT', cursive;
     font-size: 4em;
     text-align: center;
-}
+    }
     </style>
     <meta http-equiv="refresh" content="3600">
-</head>
-<body>
-<div id="slideshow">
-"""
+    </head>
+    <body>
+    <div id="slideshow">
+    """
     
     for image_file in image_files:
         rel_path = os.path.relpath(image_file, start='.')
@@ -87,9 +87,9 @@ def generate_html():
             html_content += f'        <p>{caption}</p>\n'
         html_content += f'    </div>\n'
         
-html_content += """
-</div>
-<script>
+    html_content += """
+    </div>
+    <script>
     var index = 0;
     function showNextImage() {
         var slides = document.querySelectorAll(".slide");
@@ -116,10 +116,10 @@ html_content += """
             showPrevImage();
         }
     });
-</script>
-</body>
-</html>
-"""
+    </script>
+    </body>
+    </html>
+    """
     
     with open('pagina.html', 'w') as f:
         f.write(html_content)
