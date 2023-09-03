@@ -17,6 +17,6 @@ else:
     print(files)  # Debugging: print de gesorteerde lijst
     
     # Behoud alleen de 30 meest recente
-    for file in files[30:]:
+    for file in files[50:]:
         os.remove(file)
         print(f"Verwijderd: {file}")
