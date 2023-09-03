@@ -48,7 +48,7 @@ def generate_html():
     .slide img {
     max-width: 100%;
     max-height: 100vh;
-    object-fit: contain;
+    object-fit: cover;
     margin: auto;
     display: block;
     }
