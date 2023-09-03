@@ -32,7 +32,7 @@ def generate_html():
     print(f"Image files: {image_files}")
     
     image_files.sort()
-
+    
     html_content = """
 <!DOCTYPE html>
 <html>
@@ -87,7 +87,7 @@ def generate_html():
             html_content += f'        <p>{caption}</p>\n'
         html_content += f'    </div>\n'
         
-    html_content += """
+html_content += """
 </div>
 <script>
     var index = 0;
@@ -97,8 +97,25 @@ def generate_html():
         index = (index + 1) % slides.length;
         slides[index].style.display = "block";
     }
+    function showPrevImage() {
+        var slides = document.querySelectorAll(".slide");
+        slides[index].style.display = "none";
+        index = (index - 1 + slides.length) % slides.length;
+        slides[index].style.display = "block";
+    }
     setInterval(showNextImage, 30000);
     showNextImage();
+    
+    document.body.addEventListener('click', function(event) {
+        var x = event.clientX;
+        var windowWidth = window.innerWidth;
+
+        if (x > windowWidth / 2) {
+            showNextImage();
+        } else {
+            showPrevImage();
+        }
+    });
 </script>
 </body>
 </html>
