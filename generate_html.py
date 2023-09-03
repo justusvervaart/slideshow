@@ -48,10 +48,12 @@ def generate_html():
     .slide img {
     max-width: 100%;
     max-height: 100vh;
-    object-fit: cover;
+    height: auto;
+    width: auto;
+    object-fit: contain;
     margin: auto;
     display: block;
-    }
+    }    
     .slide {
     position: relative;
     display: none;
