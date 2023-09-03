@@ -76,7 +76,7 @@ def generate_html():
     <body>
     <div id="slideshow">
     """
-    
+
     for image_file in image_files:
         rel_path = os.path.relpath(image_file, start='.')
         filename = os.path.basename(image_file).lower() 
@@ -90,6 +90,19 @@ def generate_html():
     html_content += """
     </div>
     <script>
+    function checkTime() {
+        var now = new Date();
+        var hour = now.getHours();
+        var slideshow = document.getElementById("slideshow");
+        if (hour >= 21 || hour < 9) {
+            slideshow.style.display = "none";
+            document.body.style.backgroundColor = "black";
+        } else {
+            slideshow.style.display = "block";
+            document.body.style.backgroundColor = "black";
+        }
+    }
+    
     var index = 0;
     function showNextImage() {
         var slides = document.querySelectorAll(".slide");
@@ -109,13 +122,16 @@ def generate_html():
     document.body.addEventListener('click', function(event) {
         var x = event.clientX;
         var windowWidth = window.innerWidth;
-
         if (x > windowWidth / 2) {
             showNextImage();
         } else {
             showPrevImage();
         }
     });
+
+    checkTime();
+    setInterval(checkTime, 60000);
+    
     </script>
     </body>
     </html>
