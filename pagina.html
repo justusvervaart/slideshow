@@ -1,27 +1,27 @@
 
-<!DOCTYPE html>
-<html>
-<head>
+    <!DOCTYPE html>
+    <html>
+    <head>
     <title>Foto Slideshow</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-        body {
+    body {
     background-color: black;
     margin: 0;
     padding: 0;
-}
-.slide img {
+    }
+    .slide img {
     max-width: 100%;
     max-height: 100vh;
     object-fit: contain;
     margin: auto;
     display: block;
-}
-.slide {
+    }
+    .slide {
     position: relative;
     display: none;
-}
-.slide p {
+    }
+    .slide p {
     position: absolute;
     bottom: 0;  
     left: 0;
@@ -34,13 +34,13 @@
     font-family: 'Brush Script MT', cursive;
     font-size: 4em;
     text-align: center;
-}
+    }
     </style>
     <meta http-equiv="refresh" content="3600">
-</head>
-<body>
-<div id="slideshow">
-    <div class="slide" style="display:none;">
+    </head>
+    <body>
+    <div id="slideshow">
+        <div class="slide" style="display:none;">
         <img src="contents/fotos/020D4699-B5A6-43CF-A460-C99AB86F03AA.JPG" alt="contents/fotos/020D4699-B5A6-43CF-A460-C99AB86F03AA.JPG">
     </div>
     <div class="slide" style="display:none;">
@@ -113,8 +113,8 @@
         <p>Meis aan het paardrijden</p>
     </div>
 
-</div>
-<script>
+    </div>
+    <script>
     var index = 0;
     function showNextImage() {
         var slides = document.querySelectorAll(".slide");
@@ -122,8 +122,26 @@
         index = (index + 1) % slides.length;
         slides[index].style.display = "block";
     }
+    function showPrevImage() {
+        var slides = document.querySelectorAll(".slide");
+        slides[index].style.display = "none";
+        index = (index - 1 + slides.length) % slides.length;
+        slides[index].style.display = "block";
+    }
     setInterval(showNextImage, 30000);
     showNextImage();
-</script>
-</body>
-</html>
+    
+    document.body.addEventListener('click', function(event) {
+        var x = event.clientX;
+        var windowWidth = window.innerWidth;
+
+        if (x > windowWidth / 2) {
+            showNextImage();
+        } else {
+            showPrevImage();
+        }
+    });
+    </script>
+    </body>
+    </html>
+    
