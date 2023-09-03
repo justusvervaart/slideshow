@@ -70,7 +70,7 @@ with open(caption_file_path, 'a', newline='', encoding='utf-8') as caption_file:
 
                 image = image.convert("RGB")
                 with open(filepath, 'wb') as f:
-                    image.save(f, format="JPEG", optimize=True, quality=20, exif=b'')
+                    image.save(f, format="JPEG", optimize=True, quality=30, exif=b'')
                 
                 caption_writer.writerow([filepath, decoded_subject])
                 print(f"Onderschrift geschreven voor {filepath}: {decoded_subject}")  # Logboekbericht
