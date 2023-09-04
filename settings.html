@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instellingen</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h1>Instellingen</h1>
+
+    <form id="settings-form">
+        <label for="max_fotos">Maximaal aantal foto's:</label>
+        <input type="number" id="max_fotos" name="max_fotos"><br><br>
+
+        <label for="duration">Tijdsduur per foto in seconden:</label>
+        <input type="number" id="duration" name="duration"><br><br>
+
+        <label for="start_time">Tijdstip activatie scherm:</label>
+        <input type="time" id="start_time" name="start_time"><br><br>
+
+        <label for="end_time">Tijdstip uitschakelen scherm:</label>
+        <input type="time" id="end_time" name="end_time"><br><br>
+
+        <label for="show_caption">Onderschrift tonen:</label>
+        <select id="show_caption" name="show_caption">
+            <option value="Ja">Ja</option>
+            <option value="Nee">Nee</option>
+        </select><br><br>
+
+        <input type="button" value="Opslaan" id="save-button">
+    </form>
+
+    <script>
+        // Functie om instellingen op te halen
+        function loadSettings() {
+            $.get("/settings", function(data) {
+                $('#max_fotos').val(data.max_fotos);
+                $('#duration').val(data.duration);
+                $('#start_time').val(data.start_time);
+                $('#end_time').val(data.end_time);
+                $('#show_caption').val(data.show_caption);
+            });
+        }
+
+        // Functie om instellingen op te slaan
+        function saveSettings() {
+            const settings = {
+                max_fotos: $('#max_fotos').val(),
+                duration: $('#duration').val(),
+                start_time: $('#start_time').val(),
+                end_time: $('#end_time').val(),
+                show_caption: $('#show_caption').val()
+            };
+
+            $.post("/settings", settings, function(data) {
+                alert("Instellingen opgeslagen");
+            });
+        }
+
+        // Laad de instellingen bij het laden van de pagina
+        $(document).ready(function() {
+            loadSettings();
+
+            // Bij klikken op 'Opslaan'
+            $('#save-button').click(function() {
+                saveSettings();
+            });
+        });
+    </script>
+
+</body>
+</html>
