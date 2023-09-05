@@ -6,7 +6,7 @@ on:
       - 'contents/fotos/**'
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '45 * * * *'
 
 jobs:
   build:
