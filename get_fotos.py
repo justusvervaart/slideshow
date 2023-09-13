@@ -6,6 +6,8 @@ from email.header import decode_header
 from PIL import Image
 import io
 from pyheif import read
+from PIL import ExifTags
+
 
 host = os.environ.get('EMAIL_HOST', 'imap.gmail.com')
 port = int(os.environ.get('EMAIL_PORT', 993))
@@ -68,9 +70,26 @@ with open(caption_file_path, 'a', newline='', encoding='utf-8') as caption_file:
                 else:
                     image = Image.open(io.BytesIO(image_data))
 
+                try:
+                    for orientation in ExifTags.TAGS.keys():
+                        if ExifTags.TAGS[orientation] == 'Orientation':
+                            break
+
+                    exif = dict(image._getexif().items())
+        
+                    if exif[orientation] == 3:
+                        image = image.rotate(180, expand=True)
+                    elif exif[orientation] == 6:
+                        image = image.rotate(270, expand=True)
+                    elif exif[orientation] == 8:
+                        image = image.rotate(90, expand=True)
+                except (AttributeError, KeyError, IndexError):
+                    # Als sommige foto's geen EXIF-data hebben, dan gaat het gewoon door
+                    pass
+
                 image = image.convert("RGB")
                 with open(filepath, 'wb') as f:
-                    image.save(f, format="JPEG", optimize=True, quality=30, exif=b'')
+                    image.save(f, format="JPEG", optimize=True, quality=30)
                 
                 caption_writer.writerow([filepath, decoded_subject])
                 print(f"Onderschrift geschreven voor {filepath}: {decoded_subject}")  # Logboekbericht
