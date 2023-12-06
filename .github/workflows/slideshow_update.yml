@@ -5,8 +5,8 @@ on:
      paths:
       - 'contents/fotos/**'
   workflow_dispatch:
-  schedule:
-    - cron: '45 * * * *'
+  #schedule:
+   # - cron: '45 * * * *'
 
 jobs:
   build:
